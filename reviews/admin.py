@@ -5,10 +5,14 @@ from reviews.models import Publisher, Contributor,Book, BookContributor, Review
 
 
 class BookAdmin(admin.ModelAdmin):
+    model = Book
     date_hierarchy = 'publication_date'
-    list_display = ('title', 'isbn')
+    list_display = ('title', 'isbn', 'get_publisher', 'publication_date')
     list_filter = ('publisher','publication_date')
-    search_fields = ('title','isbn', 'publisher__name')
+    search_fields = ('title', 'publisher__name')
+
+    def get_publisher(self, obj):
+        return obj.publisher.name
 
 
 class ReviewAdmin(admin.ModelAdmin):
