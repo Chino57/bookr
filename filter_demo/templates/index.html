@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Filter</title>
+</head>
+<body>
+{% load explode_filter %}
+
+{{ names|explode:"," }}
+
+</body>
+</html>
