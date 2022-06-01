@@ -25,7 +25,6 @@ class Book(models.Model):
         return "{} ({})".format(self.title, self.isbn)
 
 
-
 class Contributor(models.Model):
     """A contributor to a Book, e.g. author, editor,
     co-author.
@@ -40,8 +39,12 @@ class Contributor(models.Model):
         initials = ''.join([name[0] for name in obj.first_names.split(' ')])
         return "{}, {}".format(obj.last_names, initials)
 
+    def number_contributions(self):
+        return self.bookcontributor_set.count()
+
     def __str__(self):
         return self.initialled_name()
+
 
 class BookContributor(models.Model):
     class ContributionRole(models.TextChoices):
