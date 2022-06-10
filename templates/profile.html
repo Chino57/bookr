@@ -35,6 +35,9 @@
             Last Login: {{ request.user.last_login }}
         </p>
         {% book_list user.username %}
+        {% autoescape off %}
+            {{ books_read_plot }}
+        {% endautoescape %}
     </div>
 
     <div class="infocell" >

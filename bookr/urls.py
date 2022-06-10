@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from bookr.views import profile
+from .views import profile
 
 urlpatterns = [
     path('filter_demo/', include('filter_demo.urls')),
@@ -25,7 +25,8 @@ urlpatterns = [
     path('accounts/', include(('django.contrib.auth.urls', 'auth'), namespace='accounts')),
     path('accounts/profile/', profile, name='profile'),
     path('admin/', admin.site.urls),
-    path('', include('reviews.urls'))
+    path('', include('reviews.urls')),
+    path('', include('bookr_test.urls'))
 ]
 
 if settings.DEBUG:
