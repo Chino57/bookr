@@ -177,5 +177,4 @@ def book_media(request,pk):
             return redirect("book_detail", pk)
     else:
         form = BookMediaForm(instance=book)
-    return render(request, "reviews/instance-form.html", {"form": form, "instance": book, "model_type": "Book",
-                                                          "is_file_upload": True})
+    return render(request, "reviews/instance-form.html", {"form": form, "instance": book, "model_type": "Book"})

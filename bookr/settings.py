@@ -11,125 +11,144 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+from configurations import Configuration, values
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2puc@(qsnel2%99*%+*lqi9n%*9)qbbb81&wdv(!b6fkh6is#w'
+class Dev(Configuration):
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+    # Build paths inside the project like this: BASE_DIR / 'subdir'.
+    BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Application definition
+    # Quick-start development settings - unsuitable for production
+    # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-INSTALLED_APPS = [
-    'bookr_admin.apps.BookrAdminConfig',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'rest_framework.authtoken',
-    'reviews',
-    'filter_demo',
-    'book_management',
-    'bookr_test'
-]
+    # SECURITY WARNING: keep the secret key used in production secret!
+    SECRET_KEY = 'django-insecure-2puc@(qsnel2%99*%+*lqi9n%*9)qbbb81&wdv(!b6fkh6is#w'
 
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = values.BooleanValue(True)
 
-ROOT_URLCONF = 'bookr.urls'
-
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
-
-WSGI_APPLICATION = 'bookr.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    DEBUG_TOOLBAR_CONFIG = {
+        "INTERCEPT_REDIRECTS": False,
     }
-}
+
+    ALLOWED_HOSTS = values.ListValue([])
 
 
-# Password validation
-# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
+    # Application definition
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+    INSTALLED_APPS = [
+        'bookr_admin.apps.BookrAdminConfig',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'rest_framework',
+        'rest_framework.authtoken',
+        'reviews',
+        'filter_demo',
+        'book_management',
+        'bookr_test',
+        'debug_toolbar',
+        'crispy_forms'
+    ]
+
+    MIDDLEWARE = [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ]
+
+    ROOT_URLCONF = 'bookr.urls'
+
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [os.path.join(BASE_DIR, 'templates')],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+            },
+        },
+    ]
+
+    WSGI_APPLICATION = 'bookr.wsgi.application'
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.0/topics/i18n/
+    # Database
+    # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_TZ = True
+    DATABASES = values.DatabaseURLValue('sqlite:///{}/db.sqlite3'.format(BASE_DIR), environ_prefix='DJANGO')
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
+    # Password validation
+    # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
-STATIC_URL = 'static/'
+    AUTH_PASSWORD_VALIDATORS = [
+        {
+            'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        },
+    ]
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+    # Internationalization
+    # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+    LANGUAGE_CODE = 'en-us'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    TIME_ZONE = 'UTC'
 
-MEDIA_URL = "/media/"
+    USE_I18N = True
+
+    USE_TZ = True
+
+
+    # Static files (CSS, JavaScript, Images)
+    # https://docs.djangoproject.com/en/4.0/howto/static-files/
+
+    STATIC_URL = 'static/'
+
+    # Default primary key field type
+    # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
+
+    DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+    MEDIA_URL = "/media/"
+
+    INTERNAL_IPS = ['127.0.0.1']
+
+    import mimetypes
+
+    mimetypes.add_type("application/javascript", ".js", True)
+
+    CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+class Prod(Dev):
+    DEBUG = False
+    SECRET_KEY = values.SecretValue()
