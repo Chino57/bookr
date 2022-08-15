@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .views import profile
 import debug_toolbar
+import reviews.views
 
 urlpatterns = [
     path('filter_demo/', include('filter_demo.urls')),
@@ -27,7 +28,8 @@ urlpatterns = [
     path('accounts/profile/', profile, name='profile'),
     path('admin/', admin.site.urls),
     path('', include('reviews.urls')),
-    path('', include('bookr_test.urls'))
+    path('', include('bookr_test.urls')),
+    path('react-example/', reviews.views.react_example)
 ]
 
 if settings.DEBUG:

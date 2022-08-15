@@ -178,3 +178,6 @@ def book_media(request,pk):
     else:
         form = BookMediaForm(instance=book)
     return render(request, "reviews/instance-form.html", {"form": form, "instance": book, "model_type": "Book"})
+
+def react_example(request):
+    return render(request, "react-example.html", {"name": "Julien", "target": 5})
